@@ -1,4 +1,5 @@
 from datetime import datetime
+import os.path
 import argparse
 import glob
 import re
@@ -90,13 +91,13 @@ class WebServerLogParser():
             LOG.debug("time_stamp: %s; request: %s", time_stamp, request)
             self.log_data.append((time_stamp, request))
         
-        
     def parse_logs(self):
         for filename in glob.glob(self.log_files):
-            LOG.info("Parsing %s", filename)
-            with open(filename, 'r') as f:
-                for line in f:
-                    self.filter(line)
+            if os.path.isfile(filename):
+                LOG.info("Parsing %s", filename)
+                with open(filename, 'r') as f:
+                    for line in f:
+                        self.filter(line)
         if not self.log_data:
             exit("Empty log or file not found!")
     
