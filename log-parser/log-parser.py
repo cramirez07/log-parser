@@ -25,7 +25,7 @@ class WebServerLogParser():
         self.output = {}
         
         self.parse_logs()
-        self._generate_output()
+        self.generate_output()
         LOG.info("Generating Output:\n")
         if json_flag:
             self.generate_json_output()
@@ -35,19 +35,19 @@ class WebServerLogParser():
     def __str__(self):
         return str(self.output)
     
-    def _generate_output(self):
-        self.output['time_range'] = self._get_time_range()
-        self.output['total_requests']= self._get_total_request()
-        self.output['api_by_frequency'] = [self._compute_api_frequency()]
+    def generate_output(self):
+        self.output['time_range'] = self.get_time_range()
+        self.output['total_requests']= self.get_total_request()
+        self.output['api_by_frequency'] = [self.compute_api_frequency()]
 
-    def _get_time_range(self):
+    def get_time_range(self):
         time_stamps = []
         for item in self.log_data:
             time_stamps.append(item[0])
         result = '{} - {}'.format(min(time_stamps), max(time_stamps))
         return result
     
-    def _compute_api_frequency(self):
+    def compute_api_frequency(self):
         LOG.info("Computing Frequency")
         result = {}
         for item in self.log_data:
@@ -57,7 +57,7 @@ class WebServerLogParser():
                     result[url] = result[url] + 1
                 else:
                     result[url] = 1
-        total_request = self._get_total_request()
+        total_request = self.get_total_request()
         for item in result:
             LOG.debug("{}: {}/{}".format(item, result[item], total_request))
             result[item] = (float(result[item]) / float(total_request))
@@ -67,13 +67,13 @@ class WebServerLogParser():
             sorted_result[i] = "{0:.0%}".format((sorted_result[i]))
         return sorted_result
         
-    def _format_time(self, time):
+    def format_time(self, time):
         INPUT_FORMAT = '%d/%b/%Y:%H:%M:%S'
         OUTPUT_FORMAT = '%Y-%m-%d_%H:%M:%S'
         result = datetime.strptime(time[1:].split()[0], INPUT_FORMAT).strftime(OUTPUT_FORMAT)
         return result
         
-    def _get_request_path(self, request):
+    def get_request_path(self, request):
         try:
             result = request.split()[1].split('?')[0]
         except Exception:
@@ -81,12 +81,12 @@ class WebServerLogParser():
             return None
         return result
     
-    def _filter(self, line):
+    def filter(self, line):
         match = re.search(REGEX,line)
         if match:
             LOG.debug("Parsing: %s", line[:-1])
-            time_stamp = self._format_time(match.group('time'))
-            request = self._get_request_path(match.group('request'))
+            time_stamp = self.format_time(match.group('time'))
+            request = self.get_request_path(match.group('request'))
             LOG.debug("time_stamp: %s; request: %s", time_stamp, request)
             self.log_data.append((time_stamp, request))
         
@@ -96,11 +96,11 @@ class WebServerLogParser():
             LOG.info("Parsing %s", filename)
             with open(filename, 'r') as f:
                 for line in f:
-                    self._filter(line)
+                    self.filter(line)
         if not self.log_data:
             exit("Empty log or file not found!")
     
-    def _get_total_request(self):
+    def get_total_request(self):
         return len(self.log_data)
     
     def generate_text_output(self):
@@ -113,14 +113,20 @@ class WebServerLogParser():
             for k, v in api.items():
                 result += '\t{}: {}\n'.format(k, v)
         print(result)
-        with open('output.txt', 'w') as outfile:
-            outfile.write(result)
+        try:
+            with open('output.txt', 'w') as outfile:
+                outfile.write(result)
+        except Exception:
+            LOG.error("Error writing output.txt")
             
     def generate_json_output(self):
         result = self.output
         print(result)
-        with open('output.json', 'w') as outfile:
-            json.dump(result, outfile)
+        try:
+            with open('output.json', 'w') as outfile:
+                json.dump(result, outfile)
+        except Exception:
+            LOG.error("Error writing output.json")
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
