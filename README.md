@@ -29,5 +29,5 @@ A simple web server log file parser in python.
 ### Requirements:
 Since this is a straightforward script that works on Python 2.7 and above, without any 3rd-party libraries, you can just use it as a normal python script.  
 
-Apache common log format: https://httpd.apache.org/docs/1.3/logs.html
-Pathname style pattern :https://docs.python.org/3/library/glob.html
+ - Apache common log format: https://httpd.apache.org/docs/1.3/logs.html
+ - Pathname style pattern :https://docs.python.org/3/library/glob.html
