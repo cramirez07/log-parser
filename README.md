@@ -26,6 +26,5 @@ A simple web server log file parser in python.
         /api/most_common: 30%
         /api/less common: 20%  
 ~~~
-### TODO:
-Since this is a straight forward script that works on Python 2.7 and above, no need for deployment package.
-But I will try to create one.
+### Requirements:
+Since this is a straightforward script that works on Python 2.7 and above, without any 3rd-party libraries, you can just use it as a normal python script.  
