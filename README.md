@@ -4,6 +4,7 @@ A simple web server log file parser in python.
 * Accept a glob file expression for file names to parse. These exist on the local filesystem.
 * Supports a -v/--verbose option to log progress/status to stdout.
 * Outputs a report in a text or, if a --json flag is used, json.
+* List of API paths sorted by frequency with percentage
 * Creates output text/json file.
   
 ## Usage: 
