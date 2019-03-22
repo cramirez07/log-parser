@@ -1,10 +1,10 @@
 # Log Parser
 A simple web server log file parser in python.
-  Command-line driven using both long and short option flags (eg: -v vs –verbose).
-  Accept a glob file expression for file names to parse. These exist on the local filesystem.
-  Supports a -v/--verbose option to log progress/status to stdout.
-  Outputs a report in a text or, if a --json flag is used, json.
-  Creates output text/json file.
+* Command-line driven using both long and short option flags (eg: -v vs –verbose).
+* Accept a glob file expression for file names to parse. These exist on the local filesystem.
+* Supports a -v/--verbose option to log progress/status to stdout.
+* Outputs a report in a text or, if a --json flag is used, json.
+* Creates output text/json file.
   
 ## Usage: 
 ~~~
