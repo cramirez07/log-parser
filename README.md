@@ -18,7 +18,7 @@ A simple web server log file parser in python.
 ~~~
 ## Output:
 ~~~
-    ./log-parse.py  /var/log/apache/2019-01-0*
+    python log-parse.py /var/log/apache/2019-01-0*
     
     time_range: 2019-01-02_06:00:00 – 2019-01-03_14:00:00
     total_requests: 4000
