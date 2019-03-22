@@ -18,7 +18,7 @@ A simple web server log file parser in python.
 ~~~
 ## Output:
 ~~~
-    ./log-parse.py  /var/log/apache/2019-01-0*
+    python log-parse.py /var/log/apache/2019-01-0*
     
     time_range: 2019-01-02_06:00:00 – 2019-01-03_14:00:00
     total_requests: 4000
@@ -28,3 +28,6 @@ A simple web server log file parser in python.
 ~~~
 ### Requirements:
 Since this is a straightforward script that works on Python 2.7 and above, without any 3rd-party libraries, you can just use it as a normal python script.  
+
+ - Apache common log format: https://httpd.apache.org/docs/1.3/logs.html
+ - Pathname style pattern :https://docs.python.org/3/library/glob.html
